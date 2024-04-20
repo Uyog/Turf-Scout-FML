@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:turf_scout/auth/login_sign_up.dart';
 import 'package:turf_scout/screens/home_page.dart';
-import 'package:turf_scout/screens/login.dart';
-import 'package:turf_scout/screens/sign_up.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+        colorScheme: ColorScheme.fromSeed(seedColor: const  Color(0xff97FB57),),
         useMaterial3: true,
       ),
-      home: SignUp(onTap: (){}),
+      home: const LoginOrSignUp(),
       routes: {
             '/home': (context) => const HomePage(),
           },

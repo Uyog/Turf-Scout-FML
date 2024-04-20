@@ -23,17 +23,20 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField( 
+      cursorErrorColor: const Color(0xff97FB57),
+      style: const TextStyle(color: Color(0xff97FB57)),
       obscureText: obscureText,
       controller: controller,
+      cursorColor:  const Color(0xff97FB57),
       decoration: InputDecoration(
         icon: prefixIcon,
         suffixIcon: suffixIcon,
-        border: OutlineInputBorder( 
-          borderRadius: BorderRadius.circular(10),
+        border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
         ),
         hintText: hintText,
         labelText: labeltext,
-        iconColor: Theme.of(context).colorScheme.primary,
+        iconColor: const Color(0xff97FB57),
         
         
         

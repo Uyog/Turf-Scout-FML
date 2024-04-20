@@ -5,8 +5,8 @@ import 'package:flutter/gestures.dart';
 import 'package:turf_scout/screens/forgot_password.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:turf_scout/screens/home_page.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 class Login extends StatefulWidget {
@@ -17,6 +17,9 @@ class Login extends StatefulWidget {
 
   });
 
+
+final storage = const FlutterSecureStorage();
+  
   @override
   State<Login> createState() => _LoginState();
 }
@@ -34,64 +37,70 @@ void _togglePasswordView(){
 final TextEditingController emailcontroller = TextEditingController();
 final TextEditingController passwordcontroller = TextEditingController();
 
-void login () async {
-   showDialog(
+void login() async {
+  showDialog(
+    context: context,
+    builder: (context) => const Center(
+      child: CircularProgressIndicator(),
+    ),
+  );
+
+  final String email = emailcontroller.text;
+  final String password = passwordcontroller.text;
+
+  final response = await loginUser(email, password);
+
+  // Hide the progress indicator
+  Navigator.of(context).pop();
+
+  if (response.statusCode == 201) {
+    // Registration successful
+    final responseData = jsonDecode(response.body);
+    final token = responseData['token'];
+
+    // Store the token securely
+    await widget.storage.write(key: 'token', value: token);
+    //print('Token stored securely');
+
+    showDialog(
       context: context,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-
-    final String email = emailcontroller.text;
-    final String password = passwordcontroller.text;
-
-
-
-    final response = await loginUser(email, password);
-
-    // Hide the progress indicator
-    Navigator.of(context).pop();
-
-    if (response.statusCode == 201) {
-      // Registration successful
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Login Successful'),
-          content: const Text('You have successfully registered.'),
-          actions: [
-           TextButton(
+      builder: (context) => AlertDialog( 
+        backgroundColor: const Color(0xff121212),
+        title: Image.asset('assets/images/Success.gif'),
+        content: const Text('You have successfully logged in', style: TextStyle(color: Color(0xff97FB57)),),
+        actions: [
+          TextButton(
             onPressed: () {
               Navigator.of(context).pop();
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const HomePage()),//the import of your screen
+                MaterialPageRoute(builder: (context) => const HomePage()),
               );
+            },
+            child: const Text('OK', style: TextStyle(color: Color(0xff97FB57)),),
+          ),
+        ],
+      ),
+    );
+  } else {
+    // Registration failed
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Login Failed'),
+        content: Text('Error: ${response.body}'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
             },
             child: const Text('OK'),
           ),
-          ],
-        ),
-      );
-    } else {
-      // Registration failed
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Login Failed'),
-          content: Text('Error: ${response.body}'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK',),
-            ),
-          ],
-        ),
-      );
-    }
+        ],
+      ),
+    );
   }
+}
 
   Future<http.Response> loginUser(
        String email, String password, ) async {
@@ -114,12 +123,11 @@ void login () async {
 
 
 
-
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       
-      backgroundColor:Colors.white,
+      backgroundColor:const Color(0xff121212),
       body: Center(
         child: SingleChildScrollView( 
         scrollDirection: Axis.vertical,
@@ -135,7 +143,7 @@ void login () async {
                      style: TextStyle(
                       fontSize: 30, 
                       fontWeight: FontWeight.w600, 
-                      color: Colors.black),),
+                      color: Color(0xff97FB57)),),
           
                      const SizedBox(height: 20,),
                      
@@ -176,11 +184,11 @@ void login () async {
                        Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Don't have an account?", style: TextStyle(color:Colors.black,),),
+                          const Text("Don't have an account?", style: TextStyle(color: Color(0xff97FB57)),),
                           const SizedBox(width: 10,),
                            GestureDetector(
                             onTap: widget.onTap,
-                            child: const Text('Sign Up', style: TextStyle(color:Colors.black, fontWeight: FontWeight.bold),))
+                            child: const Text('Sign Up', style: TextStyle(color: Color(0xff97FB57), fontWeight: FontWeight.bold),))
                         ],
                       ),
           
@@ -198,7 +206,7 @@ void login () async {
                               Navigator.pushReplacement(
                                 context, 
                                 MaterialPageRoute<void>(
-                                  builder: (BuildContext context)=>const ForgotPassword()));
+                                  builder: (BuildContext context)=> const ForgotPassword()));
                                   } 
                                   ),
            ], 
@@ -211,7 +219,7 @@ void login () async {
                              RichText(
                           text:  const TextSpan(                            
                             children:  <TextSpan>[
-                             TextSpan(text: '© Terms and Conditions',style: TextStyle(color: Colors.black, )),
+                             TextSpan(text: '© Terms and Conditions',style: TextStyle(color:  Color(0xff97FB57), )),
                              ], 
                              ), 
                              ), 

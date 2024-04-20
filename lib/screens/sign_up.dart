@@ -112,7 +112,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: const Color(0xff121212),
       body: Center(
         child: SingleChildScrollView( 
           scrollDirection: Axis.vertical,
@@ -132,7 +132,7 @@ class _SignUpState extends State<SignUp> {
                   style: TextStyle(
                     fontSize: 35, 
                     fontWeight: FontWeight.w600, 
-                    color: Colors.black,),),
+                    color:  Color(0xff97FB57),),),
           
                   const SizedBox(height: 20,),
           
@@ -196,14 +196,13 @@ class _SignUpState extends State<SignUp> {
              Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                               const Text('Already have an account?', style: TextStyle(color: Colors.black,),),
+                               const Text('Already have an account?', style: TextStyle(color:  Color(0xff97FB57),),),
                               const SizedBox(width: 10,),
                                GestureDetector( 
                                 onTap: widget.onTap,
-          
                                 child: const Text('Login', 
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color:  Color(0xff97FB57),
                                   fontWeight: FontWeight.bold),))
                             ],
                           ),

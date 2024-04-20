@@ -9,18 +9,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: const Color(0xff121212),
 
         //AppBar
         appBar: AppBar(
           title: const Text(
             "TurfScout",
             style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold),
+                color: Color(0xff97FB57), fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
-          backgroundColor:Colors.white,
-          iconTheme:  const IconThemeData(color: Colors.black),
+          backgroundColor: const Color(0xff121212),
+          iconTheme:  const IconThemeData(color: Color(0xff97FB57)),
         ),
         drawer: const MyDrawer(),
 
@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,),
+                      color:  Color(0xff97FB57),),
                 ),
 
                 //Space
@@ -98,7 +98,7 @@ class HomePage extends StatelessWidget {
                                 child: Center(
                                     child: Image.asset(
                                   'assets/images/Football Icon1.png',
-                                  color: Colors.black,
+                                  color:  const Color(0xff97FB57),
                                 )),
                               ),
                             ],
@@ -120,7 +120,7 @@ class HomePage extends StatelessWidget {
                                 child: Center(
                                     child: Image.asset(
                                   'assets/images/Football Icon1.png',
-                                  color: Colors.black,
+                                  color: const Color(0xff97FB57)
                                 )),
                               ),
                             ],
@@ -142,7 +142,7 @@ class HomePage extends StatelessWidget {
                                 child: Center(
                                   child: Image.asset(
                                     'assets/images/Football Icon1.png',
-                                    color: Colors.black,
+                                    color:  const Color(0xff97FB57),
                                   ),
                                 ),
                               ),
