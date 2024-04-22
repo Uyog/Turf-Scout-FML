@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:turf_scout/components/button.dart';
 import 'package:turf_scout/components/drawer.dart';
+import 'package:turf_scout/screens/search_page.dart';
 
 
 class HomePage extends StatelessWidget {
+
   const HomePage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +25,17 @@ class HomePage extends StatelessWidget {
           centerTitle: true,
           backgroundColor: const Color(0xff121212),
           iconTheme:  const IconThemeData(color: Color(0xff97FB57)),
+          actions: [
+             IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>  SearchPage(),
+                      ));
+                },
+                icon: const Icon(Icons.search)) 
+          ],
         ),
         drawer: const MyDrawer(),
 
@@ -152,7 +167,8 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
+                MyButton(text: 'Book Now', onTap: (){ Navigator.pushNamed(context, '/book');} )
               ],
             ),
           ),

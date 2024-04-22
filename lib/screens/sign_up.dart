@@ -50,8 +50,8 @@ class _SignUpState extends State<SignUp> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Registration Successful'),
-          content: const Text('You have successfully registered.'),
+          title: Image.asset('assets/images/Successfully Done.gif', width: 50, height: 100,),
+          content: const Text('Registerd Successfully!'),
           actions: [
             TextButton(
             onPressed: () {

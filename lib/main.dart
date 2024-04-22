@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turf_scout/auth/login_sign_up.dart';
 import 'package:turf_scout/screens/home_page.dart';
+import 'package:turf_scout/screens/turfs.dart';
 
 
 void main() {
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       home: const LoginOrSignUp(),
       routes: {
             '/home': (context) => const HomePage(),
+            '/book':(context) => const TurfsPage()
           },
     );
   }

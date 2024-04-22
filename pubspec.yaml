@@ -40,6 +40,8 @@ dependencies:
   http: ^1.2.1
   provider: ^6.1.2
   flutter_secure_storage: ^9.0.0
+  lottie: ^3.1.0
+  app_bar_with_search_switch: ^1.8.5
 
 dev_dependencies:
   flutter_test:

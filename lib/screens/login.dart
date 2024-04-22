@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turf_scout/auth/login_sign_up.dart';
 import 'package:turf_scout/components/button.dart';
 import 'package:turf_scout/components/text_field.dart';
 import 'package:flutter/gestures.dart';
@@ -66,8 +67,8 @@ void login() async {
       context: context,
       builder: (context) => AlertDialog( 
         backgroundColor: const Color(0xff121212),
-        title: Image.asset('assets/images/Success.gif'),
-        content: const Text('You have successfully logged in', style: TextStyle(color: Color(0xff97FB57)),),
+        title: Image.asset('assets/images/Successfully Done.gif', width: 50, height: 100,),
+        content: const Text('Logged In Successfully!', style: TextStyle(color: Color(0xff97FB57)),),
         actions: [
           TextButton(
             onPressed: () {
@@ -93,8 +94,12 @@ void login() async {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginOrSignUp()),
+              );
             },
-            child: const Text('OK'),
+            child: const Text('OK', style: TextStyle(color: Color(0xff97FB57)),),
           ),
         ],
       ),
@@ -201,7 +206,7 @@ void login() async {
                           RichText(
                           text:  TextSpan(                            
                             children:  <TextSpan>[
-                            TextSpan(text: 'Forgot Password?', style:  const TextStyle(color: Colors.black,), 
+                            TextSpan(text: 'Forgot Password?', style:  const TextStyle(color: Color(0xff97FB57),), 
                             recognizer: TapGestureRecognizer()..onTap = (){
                               Navigator.pushReplacement(
                                 context, 

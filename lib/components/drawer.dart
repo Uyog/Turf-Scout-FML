@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:turf_scout/auth/login_sign_up.dart';
 import 'package:turf_scout/screens/login.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,9 +38,10 @@ class _MyDrawerState extends State<MyDrawer> {
       //print('Token removed from secure storage');
 
       // Navigate to the login screen
+    
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  Login(onTap: (){},)),
+        MaterialPageRoute(builder: (context) =>  const LoginOrSignUp()),
       );
     } else {
       // Handle error
@@ -54,15 +56,15 @@ class _MyDrawerState extends State<MyDrawer> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
+          const Column(
             children: [
               // ... (other drawer items)
             ],
           ),
 
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('Profile'),
+          const ListTile(
+            leading:  Icon(Icons.person),
+            title:  Text('Profile'),
 
 
           ),
@@ -71,7 +73,7 @@ class _MyDrawerState extends State<MyDrawer> {
             child: ListTile(
               leading: const Icon(Icons.logout),
               title: const Text(
-                "Log Out",
+                "L O G O U T",
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
