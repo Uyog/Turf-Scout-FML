@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 import 'dart:convert';
+
+import 'package:turf_scout/screens/turfs.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -14,7 +17,8 @@ class _SearchPageState extends State<SearchPage> {
   TextEditingController searchController = TextEditingController();
 
   Future<List<dynamic>> searchTurfs(String search) async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/api/turfs/search?search=$search'));
+    final response = await http.get(
+        Uri.parse('http://127.0.0.1:8000/api/turfs/search?search=$search'));
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
@@ -28,8 +32,13 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       backgroundColor: const Color(0xff121212),
       appBar: AppBar(
-        title: const Text('Search Turfs', style: TextStyle(color: Color(0xff97FB57)),),
+        title: const Text(
+          'Turfs',
+          style: TextStyle(color: Color(0xff97FB57), fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
         backgroundColor: const Color(0xff121212),
+        iconTheme: const IconThemeData(color: Color(0xff97FB57)),
       ),
       body: Column(
         children: [
@@ -52,7 +61,8 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  borderSide: const BorderSide(color: Color(0xff97FB57), width: 2.0),
+                  borderSide:
+                      const BorderSide(color: Color(0xff97FB57), width: 2.0),
                 ),
               ),
               style: const TextStyle(color: Color(0xff97FB57)),
@@ -68,23 +78,75 @@ class _SearchPageState extends State<SearchPage> {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
                             final turf = snapshot.data![index];
-                            return ListTile(
-                              title: Text(turf['turf_name'], style: const TextStyle(color: Color(0xff97FB57))),
-                              subtitle: Text(turf['location'], style: const TextStyle(color: Color(0xff97FB57))),
+                            return GestureDetector(
+                              onTap: () {
+                                final selectedTurf = snapshot.data![index];
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TurfsPage(
+                                      turfName: 
+                                          selectedTurf['turf_name'],
+                                      turfLocation: 
+                                          selectedTurf['location'],
+                                      turfImage: 
+                                          selectedTurf['image_path'],
+                                      turfDescription:
+                                          selectedTurf['description'],
+                                      amenities: 
+                                          selectedTurf['amenities'],
+                                      availability:
+                                          selectedTurf['availability'],
+                                      turfId: 
+                                          selectedTurf['id'].toString(),
+                                     
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: ListTile(
+                                title: Text(
+                                  turf['turf_name'],
+                                  style: const TextStyle(
+                                    color: Color(0xff97FB57),
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  turf['location'],
+                                  style: const TextStyle(
+                                    color: Color(0xff97FB57),
+                                  ),
+                                ),
+                              ),
                             );
                           },
                         );
                       } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}', style: const TextStyle(color: Color(0xff97FB57)));
+                        return Text(
+                          'Error: ${snapshot.error}',
+                          style: const TextStyle(color: Color(0xff97FB57)),
+                        );
                       } else {
-                        return const Center(child: CircularProgressIndicator(color: Color(0xff97FB57)));
+                        return  Center(
+                          child:Lottie.asset(
+                    'assets/images/Loading.json',
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.contain,
+                        ));
                       }
                     },
                   )
-                : const Center(child: Text('Enter a search term to find turfs', style: TextStyle(color: Color(0xff97FB57)))),
+                : Center(
+                    child: Lottie.asset(
+                    'assets/images/Search.json',
+                    width: 500,
+                    height: 500,
+                    fit: BoxFit.contain,
+                  )),
           ),
         ],
-     ),
-);
-}
+      ),
+    );
+  }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:turf_scout/auth/login_sign_up.dart';
-import 'package:turf_scout/screens/login.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -45,26 +44,34 @@ class _MyDrawerState extends State<MyDrawer> {
       );
     } else {
       // Handle error
-      print('Failed to revoke token: ${response.body}');
+      //print('Failed to revoke token: ${response.body}');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xff121212),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Column(
             children: [
-              // ... (other drawer items)
+              
             ],
           ),
 
-          const ListTile(
-            leading:  Icon(Icons.person),
-            title:  Text('Profile'),
+           ListTile(
+            leading: const Icon(Icons.person),
+            title:  const Text('P R O F I L E', 
+            style: TextStyle(
+              color: Color(0xff97FB57),
+              fontWeight: FontWeight.w500,
+              ),),
+              iconColor: const Color(0xff97FB57),
+              onTap: (){
+                Navigator.pushNamed(context, '/profile');
+              },
 
 
           ),
@@ -75,11 +82,11 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text(
                 "L O G O U T",
                 style: TextStyle(
-                  color: Colors.black,
+                  color:  Color(0xff97FB57),
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              iconColor: Colors.black,
+              iconColor: const Color(0xff97FB57),
               onTap: logout,
             ),
           ),

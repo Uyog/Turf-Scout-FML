@@ -89,6 +89,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  comment_box:
+    dependency: "direct main"
+    description:
+      name: comment_box
+      sha256: "6a0d9cc8d181435b123cc4249c567bd8bdf1bde8d714691b069b942e3e7d4fbb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.18"
   convert:
     dependency: transitive
     description:
@@ -134,6 +142,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_calendar_carousel:
+    dependency: "direct main"
+    description:
+      name: flutter_calendar_carousel
+      sha256: "8666447f3404d2db45a2523095cab053d4d15c4fd5438d4a893d96ea5637a3aa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.2"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -150,6 +166,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  flutter_rating_bar:
+    dependency: "direct main"
+    description:
+      name: flutter_rating_bar
+      sha256: d2af03469eac832c591a1eba47c91ecc871fe5708e69967073c043b2d775ed93
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.1"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -232,6 +256,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.7"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.18.1"
   js:
     dependency: transitive
     description:

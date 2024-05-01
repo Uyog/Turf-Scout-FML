@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:turf_scout/components/button.dart';
+import 'package:lottie/lottie.dart';
 import 'package:turf_scout/components/drawer.dart';
 import 'package:turf_scout/screens/search_page.dart';
 
-
 class HomePage extends StatelessWidget {
-
   const HomePage({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -24,30 +21,27 @@ class HomePage extends StatelessWidget {
           ),
           centerTitle: true,
           backgroundColor: const Color(0xff121212),
-          iconTheme:  const IconThemeData(color: Color(0xff97FB57)),
+          iconTheme: const IconThemeData(color: Color(0xff97FB57)),
           actions: [
-             IconButton(
+            IconButton(
                 onPressed: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>  SearchPage(),
+                        builder: (BuildContext context) => const SearchPage(),
                       ));
                 },
-                icon: const Icon(Icons.search)) 
+                icon: const Icon(Icons.search))
           ],
         ),
         drawer: const MyDrawer(),
-
-        //body of the application
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
-                //Welcome to TurfScout
-                Stack(
+              Stack(
                   children: [
                     Image.asset('assets/images/football1.jpg'),
                     const Positioned(
@@ -69,28 +63,21 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                //Space
                 const SizedBox(
                   height: 20,
                 ),
-
-                //Categories
-                 const Text(
+                const Text(
                   "Categories",
                   textAlign: TextAlign.end,
                   style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color:  Color(0xff97FB57),),
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff97FB57),
+                  ),
                 ),
-
-                //Space
                 const SizedBox(
                   height: 15,
                 ),
-
-                //Carousel
                 CarouselSlider(
                   options: CarouselOptions(
                     aspectRatio: 16 / 9,
@@ -103,7 +90,7 @@ class HomePage extends StatelessWidget {
                       width: double.infinity,
                       height: double.infinity,
                       child: Card(
-                        color:Theme.of(context).colorScheme.background,
+                        color: const Color(0xff121212),
                         elevation: 4,
                         child: Padding(
                           padding: const EdgeInsets.all(16),
@@ -112,8 +99,8 @@ class HomePage extends StatelessWidget {
                               Positioned(
                                 child: Center(
                                     child: Image.asset(
-                                  'assets/images/Football Icon1.png',
-                                  color:  const Color(0xff97FB57),
+                                  'assets/images/Footballer2.png',
+                                  color: const Color(0xff97FB57),
                                 )),
                               ),
                             ],
@@ -125,7 +112,7 @@ class HomePage extends StatelessWidget {
                       width: double.infinity,
                       height: double.infinity,
                       child: Card(
-                        color: Theme.of(context).colorScheme.background,
+                        color: const Color(0xff121212),
                         elevation: 4,
                         child: Padding(
                           padding: const EdgeInsets.all(16),
@@ -134,9 +121,8 @@ class HomePage extends StatelessWidget {
                               Positioned(
                                 child: Center(
                                     child: Image.asset(
-                                  'assets/images/Football Icon1.png',
-                                  color: const Color(0xff97FB57)
-                                )),
+                                        'assets/images/Footballer1.png',
+                                        color: const Color(0xff97FB57))),
                               ),
                             ],
                           ),
@@ -147,7 +133,7 @@ class HomePage extends StatelessWidget {
                       width: double.infinity,
                       height: double.infinity,
                       child: Card(
-                        color: Theme.of(context).colorScheme.background,
+                        color: const Color(0xff121212),
                         elevation: 4,
                         child: Padding(
                           padding: const EdgeInsets.all(16),
@@ -156,8 +142,8 @@ class HomePage extends StatelessWidget {
                               Positioned(
                                 child: Center(
                                   child: Image.asset(
-                                    'assets/images/Football Icon1.png',
-                                    color:  const Color(0xff97FB57),
+                                    'assets/images/GoalKeeper.png',
+                                    color: const Color(0xff97FB57),
                                   ),
                                 ),
                               ),
@@ -168,7 +154,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                MyButton(text: 'Book Now', onTap: (){ Navigator.pushNamed(context, '/book');} )
               ],
             ),
           ),

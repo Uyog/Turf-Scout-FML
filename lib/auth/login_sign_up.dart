@@ -25,7 +25,7 @@ class _LoginOrSignUpState extends State<LoginOrSignUp> {
       return Login(onTap: togglePages);
     }
     else {
-      return SignUp(onTap: togglePages);
+      return SignUp(onTap: togglePages,);
       }
     
   }

@@ -42,6 +42,10 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   lottie: ^3.1.0
   app_bar_with_search_switch: ^1.8.5
+  flutter_rating_bar: ^4.0.1
+  comment_box: ^0.0.18
+  flutter_calendar_carousel: ^2.4.2
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

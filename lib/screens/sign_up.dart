@@ -1,13 +1,18 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:turf_scout/components/button.dart';
 import 'package:turf_scout/components/text_field.dart';
 import 'package:http/http.dart' as http;
 import 'package:turf_scout/screens/login.dart';
 
+
+
 class SignUp extends StatefulWidget {
   final void Function()? onTap;
-  const SignUp({super.key, required this.onTap});
+
+  const SignUp({super.key, 
+  required this.onTap,});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -18,6 +23,8 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController emailcontroller = TextEditingController();
   final TextEditingController passwordcontroller = TextEditingController();
   final TextEditingController confirmPWcontroller = TextEditingController();
+  
+
 
   bool _isHidden = true;
   void _togglePasswordView() {
@@ -47,18 +54,19 @@ class _SignUpState extends State<SignUp> {
 
     if (response.statusCode == 201) {
       // Registration successful
+
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Image.asset('assets/images/Successfully Done.gif', width: 50, height: 100,),
-          content: const Text('Registerd Successfully!'),
+          title: Lottie.asset('assets/images/Tick.json', height: 100, width: 100),
+          content:  const Text('Registerd Successfully!'),
           actions: [
             TextButton(
             onPressed: () {
               Navigator.of(context).pop();
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) =>  Login(onTap: (){},)),//the import of your screen
+                MaterialPageRoute(builder: (context) =>   Login(onTap: (){},)),//the import of your screen
               );
             },
             child: const Text('OK'),
@@ -71,7 +79,7 @@ class _SignUpState extends State<SignUp> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Registration Failed'),
+          title: Lottie.asset('assets/images/Failed.json', height: 100, width: 100),
           content: Text('Error: ${response.body}'),
           actions: [
             TextButton(
@@ -187,6 +195,8 @@ class _SignUpState extends State<SignUp> {
                           ),),
           
                   const SizedBox(height: 20,),
+
+              
               
               MyButton(text: 'Proceed', onTap: signup),
 
