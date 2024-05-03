@@ -48,20 +48,13 @@ class _LoginState extends State<Login> {
 
     final response = await loginUser(email, password);
 
-    // Hide the progress indicator
     Navigator.of(context).pop();
 
     if (response.statusCode == 201) {
-      // Registration successful
       final responseData = jsonDecode(response.body);
       final token = responseData['token'];
-      final user_id = responseData['id'];
 
-      // Store the token securely
       await widget.storage.write(key: 'token', value: token);
-      await widget.storage.write(key: 'user_id', value: user_id);
-
-      print('Token stored securely');
 
       showDialog(
         context: context,
@@ -90,12 +83,11 @@ class _LoginState extends State<Login> {
         ),
       );
     } else {
-      // Registration failed
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title:Lottie.asset('assets/images/Failed.json', height: 100, width: 100),
-          content: Text('Error: ${response.body}'),
+          content: const Text('Error:Bad credentials!'),
           actions: [
             TextButton(
               onPressed: () {

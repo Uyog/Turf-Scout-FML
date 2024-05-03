@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:lottie/lottie.dart';
 import 'package:turf_scout/components/drawer.dart';
 import 'package:turf_scout/screens/search_page.dart';
 

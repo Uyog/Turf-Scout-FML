@@ -5,8 +5,6 @@ import 'package:turf_scout/screens/home_page.dart';
 import 'package:turf_scout/screens/intro.dart';
 import 'package:turf_scout/screens/payment.dart';
 import 'package:turf_scout/screens/profile.dart';
-import 'package:turf_scout/screens/search_page.dart';
-
 import 'package:turf_scout/screens/turfs.dart';
 
 void main() {
