@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:turf_scout/auth/login_sign_up.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:turf_scout/screens/profile.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
@@ -15,37 +15,25 @@ class _MyDrawerState extends State<MyDrawer> {
   final storage = const FlutterSecureStorage();
 
   Future<void> logout() async {
-    // Get the token from secure storage
     final token = await storage.read(key: 'token');
 
-    // Revoke the token from the backend
     final response = await http.post(
       Uri.parse('http://127.0.0.1:8000/api/logout'),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token', // Include the token in the Authorization header
+        'Authorization': 'Bearer $token',
       },
     );
 
     if (response.statusCode == 200) {
-      // Token revoked successfully
-      //print('Token revoked');
-
-      // Remove the token from secure storage
       await storage.delete(key: 'token');
-      //print('Token removed from secure storage');
 
-      // Navigate to the login screen
-    
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  const LoginOrSignUp()),
+        MaterialPageRoute(builder: (context) => const LoginOrSignUp()),
       );
-    } else {
-      // Handle error
-      //print('Failed to revoke token: ${response.body}');
-    }
+    } else {}
   }
 
   @override
@@ -56,24 +44,35 @@ class _MyDrawerState extends State<MyDrawer> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Column(
-            children: [
-              
-            ],
+            children: [],
           ),
-
-           ListTile(
+          ListTile(
             leading: const Icon(Icons.person),
-            title:  const Text('P R O F I L E', 
-            style: TextStyle(
-              color: Color(0xff97FB57),
-              fontWeight: FontWeight.w500,
-              ),),
-              iconColor: const Color(0xff97FB57),
-              onTap: (){
-                Navigator.pushNamed(context, '/profile');
-              },
-
-
+            title: const Text(
+              'P R O F I L E',
+              style: TextStyle(
+                color: Color(0xff97FB57),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            iconColor: const Color(0xff97FB57),
+            onTap: () {
+              Navigator.pushNamed(context, '/profile');
+            },
+          ),
+         ListTile(
+            leading: const Icon(Icons.groups),
+            title: const Text(
+              'T E A M',
+              style: TextStyle(
+                color: Color(0xff97FB57),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            iconColor: const Color(0xff97FB57),
+            onTap: () {
+              Navigator.pushNamed(context, '/profile');
+            },
           ),
           Padding(
             padding: const EdgeInsets.only(left: 25.0, bottom: 25.0),
@@ -82,7 +81,7 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text(
                 "L O G O U T",
                 style: TextStyle(
-                  color:  Color(0xff97FB57),
+                  color: Color(0xff97FB57),
                   fontWeight: FontWeight.w500,
                 ),
               ),

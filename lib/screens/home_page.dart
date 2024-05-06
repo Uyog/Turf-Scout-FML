@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:turf_scout/components/drawer.dart';
+import 'package:turf_scout/screens/create_registration.dart';
+import 'package:turf_scout/screens/profile.dart';
 import 'package:turf_scout/screens/search_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -156,6 +158,9 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        ),
+       
+     
+        );
   }
 }

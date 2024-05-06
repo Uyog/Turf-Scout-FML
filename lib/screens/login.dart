@@ -7,7 +7,6 @@ import 'package:flutter/gestures.dart';
 import 'package:turf_scout/screens/forgot_password.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:turf_scout/screens/home_page.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Login extends StatefulWidget {
@@ -53,6 +52,10 @@ class _LoginState extends State<Login> {
     if (response.statusCode == 201) {
       final responseData = jsonDecode(response.body);
       final token = responseData['token'];
+      final userRole = responseData['user']['role'];
+     
+
+      print('User Role: $userRole');
 
       await widget.storage.write(key: 'token', value: token);
 
@@ -60,7 +63,8 @@ class _LoginState extends State<Login> {
         context: context,
         builder: (context) => AlertDialog(
           backgroundColor: const Color(0xff121212),
-          title: Lottie.asset('assets/images/Tick.json', height: 100, width: 100),
+          title:
+              Lottie.asset('assets/images/Tick.json', height: 100, width: 100),
           content: const Text(
             'Logged In Successfully!',
             style: TextStyle(color: Color(0xff97FB57)),
@@ -68,11 +72,11 @@ class _LoginState extends State<Login> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                );
+                if (userRole == 'creator') {
+                  Navigator.pushReplacementNamed(context, '/createturf');
+                } else {
+                  Navigator.pushReplacementNamed(context, '/home');
+                }
               },
               child: const Text(
                 'OK',
@@ -86,7 +90,8 @@ class _LoginState extends State<Login> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title:Lottie.asset('assets/images/Failed.json', height: 100, width: 100),
+          title: Lottie.asset('assets/images/Failed.json',
+              height: 100, width: 100),
           content: const Text('Error:Bad credentials!'),
           actions: [
             TextButton(
@@ -113,8 +118,7 @@ class _LoginState extends State<Login> {
     String email,
     String password,
   ) async {
-    const String apiUrl =
-        'http://127.0.0.1:8000/api/login'; 
+    const String apiUrl = 'http://127.0.0.1:8000/api/login';
 
     final Map<String, String> data = {
       'email': email,

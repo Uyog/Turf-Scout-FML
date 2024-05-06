@@ -96,13 +96,13 @@ class IntroState extends State<Intro> {
                           width: 200,
                           height: 500,
                           child: Lottie.asset(
-                            'assets/images/Teams.json',
+                            'assets/images/Kicks.json',
                             key: UniqueKey(),
                             fit: BoxFit.contain,
                           ),
                         ),
                         const Text(
-                          'Connect with your favorite teams',
+                          'Master your skills',
                           style: TextStyle(
                             color: Color(0xff97FB57),
                             fontSize: 18,

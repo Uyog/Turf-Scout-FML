@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turf_scout/auth/login_sign_up.dart';
 import 'package:turf_scout/screens/booking.dart';
+import 'package:turf_scout/screens/create_registration.dart';
 import 'package:turf_scout/screens/home_page.dart';
 import 'package:turf_scout/screens/intro.dart';
 import 'package:turf_scout/screens/payment.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
               
             ),
         '/profile': (context) => const ProfilePage(),
+        '/createturf':(context) => const CreatorRegistrationPage(),
         '/bookings': (context) => const BookingPage(),
         '/payment': (context) => const PaymentPage(),
       },
