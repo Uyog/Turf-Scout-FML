@@ -31,8 +31,8 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  List<String> roles = ['User', 'Creator'];
-  String selectedRole = 'User';
+  List<String> roles = ['user', 'creator'];
+  String selectedRole = 'user';
 
   void signup() async {
     showDialog(

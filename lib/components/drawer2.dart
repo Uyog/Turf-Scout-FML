@@ -3,14 +3,16 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:turf_scout/auth/login_sign_up.dart';
 import 'package:http/http.dart' as http;
 
-class MyDrawer extends StatefulWidget {
-  const MyDrawer({super.key});
+
+class MyDrawer2 extends StatefulWidget {
+  const MyDrawer2({super.key});
 
   @override
-  State<MyDrawer> createState() => _MyDrawerState();
+  State<MyDrawer2> createState() => _MyDrawer2State();
 }
 
-class _MyDrawerState extends State<MyDrawer> {
+class _MyDrawer2State extends State<MyDrawer2> {
+
   final storage = const FlutterSecureStorage();
 
   Future<void> logout() async {
@@ -34,7 +36,6 @@ class _MyDrawerState extends State<MyDrawer> {
       );
     } else {}
   }
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -62,7 +63,7 @@ class _MyDrawerState extends State<MyDrawer> {
          ListTile(
             leading: const Icon(Icons.groups),
             title: const Text(
-              'T E A M',
+              'C R E A T E',
               style: TextStyle(
                 color: Color(0xff97FB57),
                 fontWeight: FontWeight.w500,
@@ -70,7 +71,7 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             iconColor: const Color(0xff97FB57),
             onTap: () {
-              Navigator.pushNamed(context, '/profile');
+              Navigator.pushNamed(context, '/create');
             },
           ),
           Padding(

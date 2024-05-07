@@ -46,6 +46,7 @@ dependencies:
   comment_box: ^0.0.18
   flutter_calendar_carousel: ^2.4.2
   intl: ^0.18.1
+  image_picker: ^1.1.1
 
 dev_dependencies:
   flutter_test:

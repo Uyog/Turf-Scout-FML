@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:lottie/lottie.dart';
 import 'package:turf_scout/components/drawer.dart';
-import 'package:turf_scout/screens/create_registration.dart';
-import 'package:turf_scout/screens/profile.dart';
 import 'package:turf_scout/screens/search_page.dart';
 
-class HomePage extends StatelessWidget {
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+ late String userName; // Declare userName variable
+
+ @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Retrieve userName from arguments
+    userName = ModalRoute.of(context)!.settings.arguments as String;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,28 +56,40 @@ class HomePage extends StatelessWidget {
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
-              Stack(
-                  children: [
-                    Image.asset('assets/images/football1.jpg'),
-                    const Positioned(
-                      top: 0,
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Center(
-                        child: Text(
-                          'Welcome to TurfScout!',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 50,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xffFFFFFF),
+             Card(
+            color: Colors.black,
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                   Lottie.asset(
+                            'assets/images/Creator.json',
+                            key: UniqueKey(),
+                            fit: BoxFit.contain,
+                            width: 100,
+                            height: 100
                           ),
-                        ),
+                  const SizedBox(width: 20),
+                 
+                          Expanded(
+                    child: Text(
+                      'Welcome $userName',
+                      style: const TextStyle(
+                        color: Color(0xff97FB57),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
+            ),
+          ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -91,7 +117,7 @@ class HomePage extends StatelessWidget {
                       width: double.infinity,
                       height: double.infinity,
                       child: Card(
-                        color: const Color(0xff121212),
+                        color: Colors.black,
                         elevation: 4,
                         child: Padding(
                           padding: const EdgeInsets.all(16),
@@ -113,7 +139,7 @@ class HomePage extends StatelessWidget {
                       width: double.infinity,
                       height: double.infinity,
                       child: Card(
-                        color: const Color(0xff121212),
+                        color: Colors.black,
                         elevation: 4,
                         child: Padding(
                           padding: const EdgeInsets.all(16),
@@ -134,7 +160,7 @@ class HomePage extends StatelessWidget {
                       width: double.infinity,
                       height: double.infinity,
                       child: Card(
-                        color: const Color(0xff121212),
+                        color: Colors.black,
                         elevation: 4,
                         child: Padding(
                           padding: const EdgeInsets.all(16),

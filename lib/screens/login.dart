@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:turf_scout/auth/login_sign_up.dart';
 import 'package:turf_scout/components/button.dart';
 import 'package:turf_scout/components/text_field.dart';
 import 'package:flutter/gestures.dart';
@@ -53,6 +52,8 @@ class _LoginState extends State<Login> {
       final responseData = jsonDecode(response.body);
       final token = responseData['token'];
       final userRole = responseData['user']['role'];
+      final userName = responseData['user']['name'];
+      
      
 
       print('User Role: $userRole');
@@ -73,9 +74,9 @@ class _LoginState extends State<Login> {
             TextButton(
               onPressed: () {
                 if (userRole == 'creator') {
-                  Navigator.pushReplacementNamed(context, '/createturf');
+                  Navigator.pushReplacementNamed(context, '/createturf', arguments: userName);
                 } else {
-                  Navigator.pushReplacementNamed(context, '/home');
+                  Navigator.pushReplacementNamed(context, '/home', arguments: userName);
                 }
               },
               child: const Text(
@@ -86,22 +87,40 @@ class _LoginState extends State<Login> {
           ],
         ),
       );
+       }else if (response.statusCode == 401) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Lottie.asset(
+          'assets/images/Failed.json',
+          height: 100,
+          width: 100,
+        ),
+        content: const Text('Error: Incorrect Email or Password!'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              'OK',
+              style: TextStyle(color: Color(0xff97FB57)),
+            ),
+          ),
+        ],
+      ),
+    );
     } else {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: Lottie.asset('assets/images/Failed.json',
               height: 100, width: 100),
-          content: const Text('Error:Bad credentials!'),
+          content: const Text('Error:Something Went Wrong!'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const LoginOrSignUp()),
-                );
               },
               child: const Text(
                 'OK',
