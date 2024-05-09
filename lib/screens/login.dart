@@ -74,9 +74,9 @@ class _LoginState extends State<Login> {
             TextButton(
               onPressed: () {
                 if (userRole == 'creator') {
-                  Navigator.pushReplacementNamed(context, '/createturf', arguments: userName);
+                  Navigator.pushReplacementNamed(context, '/createturf', arguments: {'userName': userName, 'authToken': token});
                 } else {
-                  Navigator.pushReplacementNamed(context, '/home', arguments: userName);
+                  Navigator.pushReplacementNamed(context, '/home', arguments: {'userName': userName, 'authToken': token});
                 }
               },
               child: const Text(

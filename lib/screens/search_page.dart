@@ -93,10 +93,6 @@ class _SearchPageState extends State<SearchPage> {
                                           selectedTurf['image_path'],
                                       turfDescription:
                                           selectedTurf['description'],
-                                      amenities: 
-                                          selectedTurf['amenities'],
-                                      availability:
-                                          selectedTurf['availability'],
                                       turfId: 
                                           selectedTurf['id'].toString(),
                                      

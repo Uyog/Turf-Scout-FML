@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turf_scout/components/drawer2.dart';
 
@@ -14,14 +15,28 @@ class CreatorRegistrationPage extends StatefulWidget {
 }
 
 class _CreatorRegistrationPageState extends State<CreatorRegistrationPage> {
-  late String userName; // Declare userName variable
+  late String userName;
+  late String authToken; 
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // Retrieve userName from arguments
-    userName = ModalRoute.of(context)!.settings.arguments as String;
+   final _storage = const FlutterSecureStorage();
+
+   @override
+   void initState() {
+    super.initState();
+    _retrieveTokenAndUserName();
   }
+
+  Future<void> _retrieveTokenAndUserName() async {
+    final token = await _storage.read(key: 'token');
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final userNameFromArgs = args['userName'] as String?;
+    
+    setState(() {
+      authToken = token ?? '';
+      userName = userNameFromArgs ?? '';
+    });
+  }
+ 
  
   @override
   Widget build(BuildContext context) {

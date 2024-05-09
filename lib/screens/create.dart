@@ -1,163 +1,135 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-import 'package:turf_scout/components/button.dart';
-import 'package:turf_scout/components/text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 
 class CreatePage extends StatefulWidget {
-  const CreatePage({super.key});
+  final String userRole;
+  const CreatePage({Key? key, required this.userRole}) : super(key: key);
 
   @override
-  State<CreatePage> createState() => _CreatePageState();
+  _CreatePageState createState() => _CreatePageState();
 }
 
 class _CreatePageState extends State<CreatePage> {
-   final TextEditingController _turfNameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _amenitiesController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _availabilityController = TextEditingController();
-  File? _image;
-  final picker = ImagePicker();
 
-  Future<void> _createOrUpdateTurf(bool isUpdate, {String? turfId}) async {
-    String apiUrl = 'http://127.0.0.1:8000/api/turf';
-    if (isUpdate) {
-      apiUrl = 'http://127.0.0.1:8000/api/turf/$turfId';
-    }
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      body: jsonEncode({
-        'turf_name': _turfNameController.text,
-        'location': _locationController.text,
-        'description': _descriptionController.text,
-        'amenities': _amenitiesController.text,
-        'price_per_hour': _priceController.text,
-        'availability': _availabilityController.text,
-        // Add image file as base64 string if an image is selected
-        if (_image != null) 'image': base64Encode(_image!.readAsBytesSync()),
-      }),
-      headers: {'Content-Type': 'application/json'},
-    );
-    if (response.statusCode == 200) {
-      // Turf created or updated successfully
-      final responseData = jsonDecode(response.body);
-      // Do something with responseData
-    } else {
-      // Error handling
-      print('Error: ${response.statusCode}');
-    }
+  final _storage = FlutterSecureStorage();
+
+  Future<String?> _retrieveToken() async {
+    return await _storage.read(key: 'token');
   }
 
-  final ImagePicker _picker = ImagePicker();
+  void _createTurf() async {
+    final token = await _retrieveToken();
+    if (token == null) {
+      // Token not found, handle unauthorized access
+      return;
+    }
 
-  Future<void> _getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    String url = 'http://127.0.0.1:8000/api/turf';
 
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token', // Include JWT token in the header
+    };
+
+    Map<String, dynamic> body = {
+      'name': _nameController.text,
+      'location': _locationController.text,
+      'description': _descriptionController.text,
+      'price': _priceController.text,
+      // Add other fields if needed
+    };
+
+    try {
+      final response = await http.post(Uri.parse(url), headers: headers, body: jsonEncode(body));
+      if (response.statusCode == 201) {
+        // Turf created successfully
+        print('Turf created: ${response.body}');
+        // You can navigate to another page or show a success message
       } else {
-        print('No image selected.');
+        // Error creating turf
+        print('Error creating turf: ${response.statusCode}');
+        // Handle error, show error message to the user
       }
-    });
+    } catch (e) {
+      print('Error creating turf: $e');
+      // Handle error, show error message to the user
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: const Text(
-            "Create",
-            style: TextStyle(
-                color: Color(0xff97FB57), fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-          backgroundColor: const Color(0xff121212),
-          iconTheme: const IconThemeData(color: Color(0xff97FB57)),
+        title: Text('Create Turf'),
       ),
-      backgroundColor: const Color(0xff121212),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 20),
-              const Text('Begin Creating', style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff97FB57),
-                  ),), 
-              const SizedBox(height: 20),
-              MyTextField(
-                hintText: 'TurfName', 
-                labeltext: 'TurfName', 
-                obscureText: false, 
-                controller: _turfNameController, 
-                prefixIcon: const Icon(Icons.grass_rounded), 
-                suffixIcon: null),
-
-              const SizedBox(height: 10),
-
-              MyTextField(
-                hintText: 'Location', 
-                labeltext: 'Location', 
-                obscureText: false, 
-                controller: _locationController, 
-                prefixIcon: const Icon(Icons.location_on), 
-                suffixIcon: null),
-
-              const SizedBox(height: 10),
-              
-               MyTextField(
-                hintText: 'Description', 
-                labeltext: 'Description', 
-                obscureText: false, 
-                controller: _descriptionController, 
-                prefixIcon: const Icon(Icons.description), 
-                suffixIcon: null),
-              const SizedBox(height: 10),
-               MyTextField(
-                hintText: 'Amenities', 
-                labeltext: 'Amenities', 
-                obscureText: false, 
-                controller: _amenitiesController, 
-                prefixIcon: const Icon(Icons.notes_outlined), 
-                suffixIcon: null),
-              const SizedBox(height: 10),
-              MyTextField(
-                hintText: 'Price', 
-                labeltext: 'Price', 
-                obscureText: false, 
-                controller: _priceController, 
-                prefixIcon: const Icon(Icons.attach_money_rounded), 
-                suffixIcon: null),
-              const SizedBox(height: 10),
-               MyTextField(
-                hintText: 'Hours', 
-                labeltext: 'Hours', 
-                obscureText: false, 
-                controller: _availabilityController, 
-                prefixIcon: const Icon(Icons.access_time_filled_outlined), 
-                suffixIcon: null),
-              const SizedBox(height: 20),
-              MyButton(text: 'Create', onTap:  () => _createOrUpdateTurf(false),),
-
-              const SizedBox(height: 10),
-
-              MyButton(text: 'Update', onTap: () => _createOrUpdateTurf(true),),
-              
-              const SizedBox(height: 20),
-
-              MyButton(text: 'Image', onTap:  _getImage, ),
-    
-              if (_image != null) Image.file(_image!), // Display selected image
-            ]
-        ))));
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'Name'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter the name';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _locationController,
+                decoration: InputDecoration(labelText: 'Location'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter the location';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _descriptionController,
+                decoration: InputDecoration(labelText: 'Description'),
+                maxLines: null,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter the description';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _priceController,
+                decoration: InputDecoration(labelText: 'Price'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter the price';
+                  }
+                  return null;
+                },
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _createTurf();
+                  }
+                },
+                child: Text('Create Turf'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

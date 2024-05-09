@@ -7,8 +7,8 @@ class TurfsPage extends StatefulWidget {
   final String turfLocation;
   final String turfImage;
   final String turfDescription;
-  final String amenities;
-  final String availability;
+
+ 
   final String? turfId;
   
 
@@ -18,8 +18,6 @@ class TurfsPage extends StatefulWidget {
     required this.turfLocation,
     required this.turfImage,
     required this.turfDescription,
-    required this.amenities,
-    required this.availability,
     required this.turfId,
   });
 
@@ -63,20 +61,14 @@ class _TurfsPageState extends State<TurfsPage> {
               widget.turfLocation,
               style: const TextStyle(fontSize: 18, color: Color(0xff97FB57)),
             ),
-            Text(
-              widget.availability,
-              style: const TextStyle(fontSize: 18, color: Color(0xff97FB57)),
-            ),
+           
             const Text('ksh 2500',style: TextStyle(fontSize: 16, color: Color(0xff97FB57))),
             const SizedBox(height: 16),
             Text(
               widget.turfDescription,
               style: const TextStyle(fontSize: 16, color: Color(0xff97FB57)),
             ),
-            Text(
-              widget.amenities,
-              style: const TextStyle(fontSize: 16),
-            ),
+           
             MyButton(
               text: 'Book',
               onTap: () {
