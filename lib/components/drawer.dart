@@ -38,7 +38,7 @@ class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color(0xff121212),
+      backgroundColor: Colors.black,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

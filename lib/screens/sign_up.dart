@@ -50,15 +50,11 @@ class _SignUpState extends State<SignUp> {
     final response = await registerUser(
         username, email, password, passwordConfirmation, selectedRole);
 
-    // Hide the progress indicator
-    Navigator.of(context).pop();
-
     if (response.statusCode == 201) {
-      // Registration successful
-
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
+          backgroundColor: Colors.black,
           title:
               Lottie.asset('assets/images/Tick.json', height: 100, width: 100),
           content: const Text('Registerd Successfully!'),
@@ -83,6 +79,7 @@ class _SignUpState extends State<SignUp> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
+          backgroundColor: Colors.black,
           title: Lottie.asset('assets/images/Failed.json',
               height: 100, width: 100),
           content: Text('Error: ${response.body}'),
@@ -195,7 +192,10 @@ class _SignUpState extends State<SignUp> {
                       const SizedBox(height: 20),
                       DropdownButtonFormField<String>(
                         dropdownColor: const Color(0xff121212),
-                        value: selectedRole, style: const TextStyle( color: Color(0xff97FB57),),
+                        value: selectedRole,
+                        style: const TextStyle(
+                          color: Color(0xff97FB57),
+                        ),
                         onChanged: (newValue) {
                           setState(() {
                             selectedRole = newValue!;
@@ -204,10 +204,15 @@ class _SignUpState extends State<SignUp> {
                         items: roles.map((role) {
                           return DropdownMenuItem(
                             value: role,
-                            child: Text(role, style: const TextStyle( color: Color(0xff97FB57),),),
+                            child: Text(
+                              role,
+                              style: const TextStyle(
+                                color: Color(0xff97FB57),
+                              ),
+                            ),
                           );
                         }).toList(),
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Role',
                           hintText: 'Select Role',
                           border: OutlineInputBorder(

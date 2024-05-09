@@ -1,106 +1,120 @@
-import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 
-
-class PreviewPage extends StatelessWidget {
-  final String turfName;
+class Turf {
+  final String id;
+  final String name;
   final String location;
   final String description;
-  final String price;
-  final File? image;
+  final double price;
+  final String creatorId;
 
-  const PreviewPage({
-    super.key,
-    required this.turfName,
+  Turf({
+    required this.id,
+    required this.name,
     required this.location,
     required this.description,
     required this.price,
-    required this.image,
+    required this.creatorId,
   });
+}
+
+class CollectionPage extends StatefulWidget {
+  const CollectionPage({super.key});
+
+  @override
+  State<CollectionPage> createState() => _CollectionPageState();
+}
+
+class _CollectionPageState extends State<CollectionPage> {
+  List<Turf> userTurfs = [];
+  final _storage = const FlutterSecureStorage();
+
+  bool _isLoading = false;
+  String _errorMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserTurfs();
+  }
+
+  Future<String?> _retrieveToken() async {
+    return await _storage.read(key: 'token');
+  }
+
+  Future<void> _fetchUserTurfs() async {
+    setState(() {
+      _isLoading = true;
+    });
+    final token = await _retrieveToken();
+    if (token == null) {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = 'Token not found. Please login again.';
+      });
+      return;
+    }
+
+    String url = 'http://127.0.0.1:8000/api/turf';
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token', // Include JWT token in the header
+    };
+
+    try {
+      final response = await http.get(Uri.parse(url), headers: headers);
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = jsonDecode(response.body);
+        setState(() {
+          userTurfs = responseData.map((turf) => Turf(
+            id: turf['id'].toString(),
+            name: turf['name'],
+            location: turf['location'],
+            description: turf['description'],
+            price: double.parse(turf['price'].toString()),
+            creatorId: turf['creator_id'].toString(),
+          )).toList();
+        });
+      } else {
+         setState(() {
+          _isLoading = false;
+          _errorMessage = 'Error: ${response.statusCode}. Unable to fetch user turfs.';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = 'Error: $e. Unable to fetch user turfs.';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Preview",
-          style: TextStyle(color: Color(0xff97FB57), fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xff121212),
-        iconTheme: const IconThemeData(color: Color(0xff97FB57)),
-      ),
+     return Scaffold(
       backgroundColor: const Color(0xff121212),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 20),
-            const Text(
-              'Preview Turf',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff97FB57),
-              ),
-            ),
-            const SizedBox(height: 20),
-            _buildPreviewCard(),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Add logic to display notification here
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Turf created successfully!'),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-                // Navigate to view turf page
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => ViewTurfPage()));
-              },
-              child: const Text('Confirm'),
-            ),
-          ],
-        ),
+      appBar: AppBar(
+        title: const Text('Your Turfs'),
+      ),
+      body: userTurfs.isEmpty
+          ? const Center(
+              child: Text('No turfs created'),
+            )
+      : ListView.builder(
+        itemCount: userTurfs.length,
+        itemBuilder: (context, index) {
+          final turf = userTurfs[index];
+          return ListTile(
+            title: Text(turf.name),
+            subtitle: Text(turf.description),
+            trailing: Text('\$${turf.price.toStringAsFixed(2)}'),
+          );
+        },
       ),
     );
-  }
-  Widget _buildPreviewCard() {
-    return Card(
-      color: Colors.grey[800],
-      elevation: 5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Turf Name: $turfName',
-              style: const TextStyle(color: Colors.white),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Location: $location',
-              style: const TextStyle(color: Colors.white),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Description: $description',
-              style: const TextStyle(color: Colors.white),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Price: $price',
-              style: const TextStyle(color: Colors.white),
-            ),
-            const SizedBox(height: 10),
-            if (image != null) Image.file(image!), // Display selected image
-          ],
-        ),
-    ));
   }
 }

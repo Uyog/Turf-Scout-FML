@@ -86,13 +86,13 @@ class _SearchPageState extends State<SearchPage> {
                                   MaterialPageRoute(
                                     builder: (context) => TurfsPage(
                                       turfName: 
-                                          selectedTurf['turf_name'],
+                                          selectedTurf['name'],
                                       turfLocation: 
                                           selectedTurf['location'],
-                                      turfImage: 
-                                          selectedTurf['image_path'],
+                                      //turfImage: 
+                                         // selectedTurf['description'],
                                       turfDescription:
-                                          selectedTurf['description'],
+                                          selectedTurf['image_url'],
                                       turfId: 
                                           selectedTurf['id'].toString(),
                                      
@@ -102,7 +102,7 @@ class _SearchPageState extends State<SearchPage> {
                               },
                               child: ListTile(
                                 title: Text(
-                                  turf['turf_name'],
+                                  turf['name'],
                                   style: const TextStyle(
                                     color: Color(0xff97FB57),
                                   ),
@@ -125,7 +125,7 @@ class _SearchPageState extends State<SearchPage> {
                       } else {
                         return  Center(
                           child:Lottie.asset(
-                    'assets/images/Loading.json',
+                    'assets/images/Loadingball.json',
                     width: 100,
                     height: 100,
                     fit: BoxFit.contain,

@@ -5,7 +5,7 @@ import 'package:turf_scout/screens/booking.dart';
 class TurfsPage extends StatefulWidget {
   final String turfName;
   final String turfLocation;
-  final String turfImage;
+  //final String turfImage;
   final String turfDescription;
 
  
@@ -16,7 +16,7 @@ class TurfsPage extends StatefulWidget {
     super.key,
     required this.turfName,
     required this.turfLocation,
-    required this.turfImage,
+    //required this.turfImage,
     required this.turfDescription,
     required this.turfId,
   });
@@ -46,12 +46,12 @@ class _TurfsPageState extends State<TurfsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              'http://127.0.0.1:8000/storage/${widget.turfImage}',
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
+            // Image.network(
+            //   'http://127.0.0.1:8000/storage/${widget.turfImage}',
+            //   height: 200,
+            //   width: double.infinity,
+            //   fit: BoxFit.cover,
+            // ),
             const SizedBox(height: 16),
             Text(
               widget.turfName,

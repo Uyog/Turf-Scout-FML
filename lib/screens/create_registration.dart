@@ -11,8 +11,7 @@ class CreatorRegistrationPage extends StatefulWidget {
 
   @override
   State<CreatorRegistrationPage> createState() => _CreatorRegistrationPageState();
-  
-}
+  }
 
 class _CreatorRegistrationPageState extends State<CreatorRegistrationPage> {
   late String userName;
@@ -36,7 +35,6 @@ class _CreatorRegistrationPageState extends State<CreatorRegistrationPage> {
       userName = userNameFromArgs ?? '';
     });
   }
- 
  
   @override
   Widget build(BuildContext context) {
@@ -78,7 +76,7 @@ class _CreatorRegistrationPageState extends State<CreatorRegistrationPage> {
                  
                           Expanded(
                     child: Text(
-                      'Welcome $userName',
+                       'Welcome ${userName.isNotEmpty ? userName : 'Loading...'}',
                       style: const TextStyle(
                         color: Color(0xff97FB57),
                         fontWeight: FontWeight.bold,
@@ -93,6 +91,7 @@ class _CreatorRegistrationPageState extends State<CreatorRegistrationPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xff97FB57),
         onPressed: () {
           Navigator.pushNamed(context, '/create');
         },

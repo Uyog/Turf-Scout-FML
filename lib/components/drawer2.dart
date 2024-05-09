@@ -39,7 +39,7 @@ class _MyDrawer2State extends State<MyDrawer2> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color(0xff121212),
+      backgroundColor: Colors.black,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -63,7 +63,7 @@ class _MyDrawer2State extends State<MyDrawer2> {
          ListTile(
             leading: const Icon(Icons.groups),
             title: const Text(
-              'C R E A T E',
+              'C O L L E C T I O N',
               style: TextStyle(
                 color: Color(0xff97FB57),
                 fontWeight: FontWeight.w500,
@@ -71,7 +71,7 @@ class _MyDrawer2State extends State<MyDrawer2> {
             ),
             iconColor: const Color(0xff97FB57),
             onTap: () {
-              Navigator.pushNamed(context, '/create');
+              Navigator.pushNamed(context, '/collection');
             },
           ),
           Padding(

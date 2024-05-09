@@ -52,18 +52,14 @@ class _LoginState extends State<Login> {
       final responseData = jsonDecode(response.body);
       final token = responseData['token'];
       final userRole = responseData['user']['role'];
-      final userName = responseData['user']['name'];
-      
-     
-
-      print('User Role: $userRole');
+      final userName = responseData['user']['name'] ?? '';
 
       await widget.storage.write(key: 'token', value: token);
 
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          backgroundColor: const Color(0xff121212),
+          backgroundColor: Colors.black,
           title:
               Lottie.asset('assets/images/Tick.json', height: 100, width: 100),
           content: const Text(
@@ -74,9 +70,14 @@ class _LoginState extends State<Login> {
             TextButton(
               onPressed: () {
                 if (userRole == 'creator') {
-                  Navigator.pushReplacementNamed(context, '/createturf', arguments: {'userName': userName, 'authToken': token});
+                  Navigator.pushReplacementNamed(context, '/createturf',
+                      arguments: {'userName': userName, 'authToken': token});
                 } else {
-                  Navigator.pushReplacementNamed(context, '/home', arguments: {'userName': userName, 'authToken': token});
+                  Navigator.pushReplacementNamed(
+                    context,
+                    '/home',
+                    arguments: userName,
+                  );
                 }
               },
               child: const Text(
@@ -87,36 +88,44 @@ class _LoginState extends State<Login> {
           ],
         ),
       );
-       }else if (response.statusCode == 401) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Lottie.asset(
-          'assets/images/Failed.json',
-          height: 100,
-          width: 100,
-        ),
-        content: const Text('Error: Incorrect Email or Password!'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text(
-              'OK',
-              style: TextStyle(color: Color(0xff97FB57)),
-            ),
+    } else if (response.statusCode == 401) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          backgroundColor: Colors.black,
+          title: Lottie.asset(
+            'assets/images/Failed.json',
+            height: 100,
+            width: 100,
           ),
-        ],
-      ),
-    );
+          content: const Text(
+            'Error: Incorrect Email or Password!',
+            style: TextStyle(color: Color(0xff97FB57)),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'OK',
+                style: TextStyle(color: Color(0xff97FB57)),
+              ),
+            ),
+          ],
+        ),
+      );
     } else {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
+          backgroundColor: Colors.black,
           title: Lottie.asset('assets/images/Failed.json',
               height: 100, width: 100),
-          content: const Text('Error:Something Went Wrong!'),
+          content: const Text(
+            'Error:Something Went Wrong!',
+            style: TextStyle(color: Color(0xff97FB57)),
+          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -139,7 +148,7 @@ class _LoginState extends State<Login> {
   ) async {
     const String apiUrl = 'http://127.0.0.1:8000/api/login';
 
-    final Map<String, String> data = {
+    final Map<String, dynamic> data = {
       'email': email,
       'password': password,
     };

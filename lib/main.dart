@@ -6,6 +6,7 @@ import 'package:turf_scout/screens/create_registration.dart';
 import 'package:turf_scout/screens/home_page.dart';
 import 'package:turf_scout/screens/intro.dart';
 import 'package:turf_scout/screens/payment.dart';
+import 'package:turf_scout/screens/preview.dart';
 import 'package:turf_scout/screens/profile.dart';
 import 'package:turf_scout/screens/turfs.dart';
 
@@ -31,10 +32,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/loginOrSignUp': (context) => const LoginOrSignUp(),
         '/home': (context) => const HomePage(),
+        '/collection' : (context) => const CollectionPage(),
         '/book': (context) => const TurfsPage(
               turfName: '',
               turfLocation: '',
-              turfImage: '',
+              //turfImage: '',
               turfDescription: '',
               turfId: '',
               
